@@ -1,0 +1,2 @@
+Equipo 1,Gana,Empata,Pierde,Equipo 2
+Argentina,x,,,Alemania
