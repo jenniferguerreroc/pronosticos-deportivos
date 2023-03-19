@@ -13,10 +13,11 @@ public class LecturaArchivo {
 		String resultadoPronostico;
 		String equipo1;
 		String equipo2;
-		String goles1;
-		String goles2;
-		Pronostico pronostico1 = new Pronostico("","");
-		
+		int goles1;
+		int goles2;
+		Pronostico pronostico1 = new Pronostico();
+		Resultados resultado1 = new Resultados();
+
 		
 		//leer el archivo pronostico linea por linea y asignación de variables equipo y resultado
 		try {
@@ -27,14 +28,12 @@ public class LecturaArchivo {
                 equipoPronostico = separar[0];
                 resultadoPronostico = separar[1];
                 pronostico1 = new Pronostico(equipoPronostico, resultadoPronostico);
-                System.out.println(pronostico1.getEquipoPronostico() + " " + pronostico1.getResultadoPronostico());
+
             } 
 		}   catch (IOException e) {
 			System.out.println("Error al leer el archivo de pronosticos");
             e.printStackTrace();
         }
-		
-
 		
 		//leer el archivo resultado linea por linea y asignación de variables equipo y goles
 		try {
@@ -43,17 +42,16 @@ public class LecturaArchivo {
                 String linea = sc.nextLine();
                 String [] separar = linea.split(",");
                 equipo1 = separar[0];
-                goles1 = separar[1];
-                goles2 = separar[2];
+                goles1 = Integer.parseInt(separar[1]);
+                goles2 = Integer.parseInt(separar[2]);
                 equipo2 = separar[3];
+                resultado1 = new Resultados(equipo1, goles1, equipo2, goles2);
                 
             } 
 		}   catch (IOException e) {
 			System.out.println("Error al leer el archivo de resultados");
             e.printStackTrace();
         }
-		
-		
 		
 		
 	}

@@ -10,6 +10,11 @@ public class Pronostico {
 		this.resultadoPronostico = resultado;
 	}
 	
+	public Pronostico () {
+		this.equipoPronostico = "";
+		this.resultadoPronostico = "";
+	}
+	
 	public String getEquipoPronostico() {
 		return equipoPronostico;
 	}
