@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.file.*;
 import java.util.*;
 
-public class Pronosticos {
+public class LecturaArchivo {
 
 	public static void main(String[] args) {
 		String archivoPronostico = "C:\\Users\\54116\\Documents\\Git\\pronosticos-deportivos\\integrador_pronosticos\\src\\integrador_pronosticos\\Pronosticos.txt";
