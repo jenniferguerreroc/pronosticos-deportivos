@@ -7,14 +7,22 @@ import java.util.*;
 public class LecturaArchivo {
 
 	public static void main(String[] args) {
+		
+		//variables de los archivos
 		String archivoPronostico = "C:\\Users\\54116\\Documents\\Git\\pronosticos-deportivos\\integrador_pronosticos\\src\\integrador_pronosticos\\Pronosticos.txt";
 		String archivoResultado = "C:\\Users\\54116\\Documents\\Git\\pronosticos-deportivos\\integrador_pronosticos\\src\\integrador_pronosticos\\Resultados.txt";
+		
+		//variables de los pronosticos
 		String equipoPronostico;
 		String resultadoPronostico;
-		String equipo1;
-		String equipo2;
+		
+		//variables de los resultados
+		String equipo1 = "";
+		String equipo2 = "";
 		int goles1;
 		int goles2;
+		
+		//constructores
 		Pronostico pronostico1 = new Pronostico();
 		Resultados resultado1 = new Resultados();
 
@@ -35,7 +43,7 @@ public class LecturaArchivo {
             e.printStackTrace();
         }
 		
-		//leer el archivo resultado linea por linea y asignación de variables equipo y goles
+		//leer el archivo resultado linea por linea y asignación de variables equipos y goles
 		try {
             Scanner sc = new Scanner(new File(archivoResultado));
             while (sc.hasNextLine()) {
@@ -54,6 +62,31 @@ public class LecturaArchivo {
         }
 		
 		
+		//condicional para determinar resultado del partido
+		String estado = "";
+		if(resultado1.getGoles1()>resultado1.getGoles2()) {
+			equipo1 = resultado1.getEquipo1();
+			estado = "G";
+		} else if (resultado1.getGoles2()>resultado1.getGoles1()) {
+			equipo2 = resultado1.getEquipo2();
+			estado = "G";
+		} else if (resultado1.getGoles1() ==  resultado1.getGoles2()) {
+			equipo1 = resultado1.getEquipo1();
+			equipo2 = resultado1.getEquipo2();
+			estado = "E";
+		}
+		
+		//contador de puntos
+		int cantidadPartidos = 1;
+		for(int puntaje=1; puntaje<=cantidadPartidos; puntaje++ ) {
+			//condicional para determinar si el usuario acertó
+			if(pronostico1.getEquipoPronostico().equals(equipo1) && pronostico1.getResultadoPronostico().equals(estado)) {
+				System.out.println("Obtiene " + puntaje + " punto");
+			} else {
+				System.out.println("No obtiene puntos");
+			}
+		}
+
 	}
 
 }
