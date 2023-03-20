@@ -64,23 +64,27 @@ public class LecturaArchivo {
 		
 		//condicional para determinar resultado del partido
 		String estado = "";
+		String equipo = "";
+		String equipoEmpatado = "";
 		if(resultado1.getGoles1()>resultado1.getGoles2()) {
-			equipo1 = resultado1.getEquipo1();
+			equipo = resultado1.getEquipo1();
 			estado = "G";
 		} else if (resultado1.getGoles2()>resultado1.getGoles1()) {
-			equipo2 = resultado1.getEquipo2();
+			equipo = resultado1.getEquipo2();
 			estado = "G";
-		} else if (resultado1.getGoles1() ==  resultado1.getGoles2()) {
-			equipo1 = resultado1.getEquipo1();
-			equipo2 = resultado1.getEquipo2();
+		} else if (resultado1.getGoles1() == resultado1.getGoles2()) {
+			equipo = resultado1.getEquipo1();
+			equipoEmpatado = resultado1.getEquipo2();
 			estado = "E";
 		}
 		
+		System.out.println(equipo);
+		System.out.println(estado);
 		//contador de puntos
 		int cantidadPartidos = 1;
 		for(int puntaje=1; puntaje<=cantidadPartidos; puntaje++ ) {
 			//condicional para determinar si el usuario acertó
-			if(pronostico1.getEquipoPronostico().equals(equipo1) && pronostico1.getResultadoPronostico().equals(estado)) {
+			if((pronostico1.getEquipoPronostico().equals(equipo)||pronostico1.getEquipoPronostico().equals(equipoEmpatado))&& pronostico1.getResultadoPronostico().equals(estado)) {
 				System.out.println("Obtiene " + puntaje + " punto");
 			} else {
 				System.out.println("No obtiene puntos");
