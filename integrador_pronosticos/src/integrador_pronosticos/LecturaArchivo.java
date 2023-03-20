@@ -78,10 +78,8 @@ public class LecturaArchivo {
 			estado = "E";
 		}
 		
-		System.out.println(equipo);
-		System.out.println(estado);
 		//contador de puntos
-		int cantidadPartidos = 1;
+		int cantidadPartidos = 2;
 		for(int puntaje=1; puntaje<=cantidadPartidos; puntaje++ ) {
 			//condicional para determinar si el usuario acertó
 			if((pronostico1.getEquipoPronostico().equals(equipo)||pronostico1.getEquipoPronostico().equals(equipoEmpatado))&& pronostico1.getResultadoPronostico().equals(estado)) {
