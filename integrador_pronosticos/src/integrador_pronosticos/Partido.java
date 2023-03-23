@@ -1,26 +1,24 @@
 package integrador_pronosticos;
 
-public class Resultados {
+public class Partido {
 	private String equipo1;
 	private String equipo2;
 	private int goles1;
 	private int goles2;
 	
-	public Resultados (String equipo1, int goles1, String equipo2, int goles2) {
+	public Partido (String equipo1, int goles1, String equipo2, int goles2) {
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
 		this.goles1 = goles1;
 		this.goles2 = goles2;
 	}
-	
 
-	public Resultados() {
+	public Partido() {
 		this.equipo1 = "";
 		this.equipo2 = "";
 		this.goles1 = 0;
 		this.goles2 = 0;
 	}
-
 
 	public String getEquipo1() {
 		return equipo1;

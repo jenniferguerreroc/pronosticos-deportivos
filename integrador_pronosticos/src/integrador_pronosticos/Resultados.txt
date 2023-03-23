@@ -1,1 +1,2 @@
-Argentina,2,0,Alemania
+Argentina,0,0,Alemania
+Peru,2,0,Venezuela
