@@ -11,34 +11,27 @@ public class LecturaArchivo {
 		//variables de los archivos
 		Path archivoPronostico = Paths.get("src\\integrador_pronosticos\\Pronosticos.txt");
 		Path archivoResultado = Paths.get("src\\integrador_pronosticos\\Resultados.txt");
+
+		//listas
+		List<Pronostico> pronosticos = new ArrayList<>();
+		List<Partido> partidos = new ArrayList<>();
+		List<Resultado> resultados = new ArrayList<>();
 		
-		//variables de los pronosticos
-		String equipoPronostico;
-		String resultadoPronostico;
-		
-		//variables de los resultados
-		String equipo1;
-		String equipo2;
-		int goles1;
-		int goles2;
-		
-		//constructores
-		Pronostico pronostico[] = new Pronostico[2];
-		Partido partido[] = new Partido[2];
-		Resultado resultado[] = new Resultado[2];
+		//mapa para llevar un conteo de los puntos de cada participante
+		Map<String, Integer> puntosPorParticipante = new HashMap<>();
 		
 		//leer el archivo pronostico linea por linea y asignación de variables equipo y resultado
 		try {
             Scanner sc = new Scanner(archivoPronostico);
-            int i=0;
             while (sc.hasNextLine()) {
                 String linea = sc.nextLine();
                 String [] separar = linea.split(",");
-                equipoPronostico = separar[0];
-                resultadoPronostico = separar[1];
-                pronostico[i] = new Pronostico(equipoPronostico, resultadoPronostico);
-                i++;
-                
+                String participante = separar[0];
+                String equipo1 = separar[1];
+                String resultado1 = separar[2];
+                String equipo2 = separar[3];
+                String resultado2 = separar[4];
+                pronosticos.add(new Pronostico(participante, equipo1, resultado1, equipo2, resultado2));
             } 
 		}   catch (IOException e) {
 			System.out.println("Error al leer el archivo de pronosticos");
@@ -48,50 +41,62 @@ public class LecturaArchivo {
 		//leer el archivo resultado linea por linea y asignación de variables equipos y goles
 		try {
             Scanner sc = new Scanner(archivoResultado);
-            int i = 0;
             while (sc.hasNextLine()) {
                 String linea = sc.nextLine();
                 String [] separar = linea.split(",");
-                equipo1 = separar[0];
-                goles1 = Integer.parseInt(separar[1]);
-                goles2 = Integer.parseInt(separar[2]);
-                equipo2 = separar[3];
-                partido[i] = new Partido(equipo1, goles1, equipo2, goles2);
-                i++;
+                int ronda = Integer.parseInt(separar[0]);
+                String equipo1 = separar[1];
+                int goles1 = Integer.parseInt(separar[2]);
+                int goles2 = Integer.parseInt(separar[3]);
+                String equipo2 = separar[4];
+                partidos.add(new Partido(ronda, equipo1, goles1, equipo2, goles2));
             } 
 		}   catch (IOException e) {
 			System.out.println("Error al leer el archivo de resultados");
             e.printStackTrace();
         }
 		
-
-		//condicional para determinar resultado del partido
-		for(int i=0;i<2;i++) {
-			resultado[i] = new Resultado();
-			if(partido[i].getGoles1()>partido[i].getGoles2()) {
-				resultado[i].setResultado("G");
-				resultado[i].setEquipo(partido[i].getEquipo1());
-			} else if (partido[i].getGoles2()>partido[i].getGoles1()) {
-				resultado[i].setResultado("G");
-				resultado[i].setEquipo(partido[i].getEquipo2());
-			} else if (partido[i].getGoles1() == partido[i].getGoles2()) {
-				resultado[i].setResultado("E");
-				resultado[i].setEquipo(pronostico[i].getEquipo());
+		//condicional para determinar el resultado de cada partido
+		for(Partido partido : partidos) {
+			Resultado resultado = new Resultado();
+			if(partido.getGoles1()>partido.getGoles2()) {
+				resultado.setEquipo1(partido.getEquipo1());
+				resultado.setResultado1("Gana");
+				resultado.setEquipo2(partido.getEquipo2());
+				resultado.setResultado2("Pierde");
+			} else if (partido.getGoles2()>partido.getGoles1()) {
+				resultado.setEquipo2(partido.getEquipo2());
+				resultado.setResultado2("Gana");
+				resultado.setEquipo1(partido.getEquipo1());
+				resultado.setResultado1("Pierde");
+			} else if (partido.getGoles1() == partido.getGoles2()) {
+				resultado.setEquipo1(partido.getEquipo1());
+				resultado.setResultado1("Empata");
+				resultado.setEquipo2(partido.getEquipo2());
+				resultado.setResultado2("Empata");
+			}
+			resultados.add(resultado);
+		}
+		
+		//inicializamos el mapa con todos los participantes y 0 puntos
+		for (Pronostico pronostico : pronosticos) {
+		    puntosPorParticipante.put(pronostico.getParticipante(), 0);
+		}
+		
+		//condicional para determinar si el usuario acertó
+		for (Pronostico pronostico : pronosticos) {
+			for (Resultado resultado : resultados) {
+				if(pronostico.getEquipo1().equals(resultado.getEquipo1()) && pronostico.getResultado1().equals(resultado.getResultado1())) {
+					int puntosActuales = puntosPorParticipante.get(pronostico.getParticipante());
+	                puntosPorParticipante.put(pronostico.getParticipante(), puntosActuales + 1);
+				}
 			}
 		}
 		
-		//contador de puntos
-		int puntaje=0;
-		for(int i=0; i<2; i++) {
-			//condicional para determinar si el usuario acertó
-			if(pronostico[i].getEquipo().equals(resultado[i].getEquipo()) && pronostico[i].getResultado().equals(resultado[i].getResultado())) {
-				puntaje +=1;
-				System.out.println("Obtiene " + puntaje + " punto");
-			} else {
-				System.out.println("No obtiene puntos");
-			}
+		//imprimir el resultado dee cada participante
+		for (String participante : puntosPorParticipante.keySet()) {
+		    System.out.println(participante + ": " + puntosPorParticipante.get(participante) + " puntos");
 		}
-
 	}
 
 }

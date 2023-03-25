@@ -1,2 +1,4 @@
-Argentina,E
-Venezuela,G
+Maria,Argentina,Gana,Alemania,Pierde
+Maria,Peru,Gana,Venezuela,Pierde
+Pedro,Argentina,Empata,Alemania,Empata
+Pedro,Peru,Gana,Venezuela,Pierde
