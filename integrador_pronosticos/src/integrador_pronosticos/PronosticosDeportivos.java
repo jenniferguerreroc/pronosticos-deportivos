@@ -46,7 +46,6 @@ public class PronosticosDeportivos {
 		}catch (IllegalArgumentException e) {
         	System.out.println(e.getMessage());
         }	
-		
 	}		
 	
 	public static void cargarPronosticos() {
