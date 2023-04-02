@@ -3,7 +3,7 @@ package integrador_pronosticos;
 import java.io.*;
 import java.nio.file.*;
 import java.util.*;
- 
+
 public class PronosticosDeportivos {
 	//listas de objetos
 	static List<Resultado> resultados = new ArrayList<>();

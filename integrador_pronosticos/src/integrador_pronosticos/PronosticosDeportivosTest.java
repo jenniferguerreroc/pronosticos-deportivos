@@ -3,7 +3,7 @@ package integrador_pronosticos;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
- 
+
 class PronosticosDeportivosTest {
 
 	@Test
