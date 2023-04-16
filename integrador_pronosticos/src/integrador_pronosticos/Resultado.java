@@ -1,21 +1,46 @@
 package integrador_pronosticos;
 
 public class Resultado {
+	private int fase;
+	private int ronda;
 	private String equipo1;
 	private String resultado1;
 	private String equipo2;
 	private String resultado2;
 	
-	public Resultado(String equipo1, String resultado1, String equipo2, String resultado2) {
-		super();
+	public Resultado(int fase, int ronda,String equipo1, String resultado1, String equipo2, String resultado2) {
+		this.fase = fase;
+		this.ronda = ronda;
 		this.equipo1 = equipo1;
 		this.resultado1 = resultado1;
 		this.equipo2 = equipo2;
 		this.resultado2 = resultado2;
 	}
+
 	public Resultado() {
 		// TODO Auto-generated constructor stub
 	}
+
+	public int getFase() {
+		return fase;
+	}
+
+	public void setFase(int fase) {
+		this.fase = fase;
+	}
+
+	public int getRonda() {
+		return ronda;
+	}
+
+
+
+	public void setRonda(int ronda) {
+		this.ronda = ronda;
+	}
+
+
+
 	public String getEquipo1() {
 		return equipo1;
 	}

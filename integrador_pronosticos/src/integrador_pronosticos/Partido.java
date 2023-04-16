@@ -1,34 +1,16 @@
 package integrador_pronosticos;
 
 public class Partido {
-	private int ronda;
 	private String equipo1;
 	private String equipo2;
 	private int goles1;
 	private int goles2;
 	
-	public Partido (int ronda, String equipo1, int goles1, String equipo2, int goles2) {
-		this.ronda = ronda;
+	public Partido (String equipo1, int goles1, String equipo2, int goles2) {
 		this.equipo1 = equipo1;
 		this.equipo2 = equipo2;
 		this.goles1 = goles1;
 		this.goles2 = goles2;
-	}
-
-	public Partido() {
-		this.ronda = 0;
-		this.equipo1 = "";
-		this.equipo2 = "";
-		this.goles1 = 0;
-		this.goles2 = 0;
-	}
-
-	public int getRonda() {
-		return ronda;
-	}
-
-	public void setRonda(int ronda) {
-		this.ronda = ronda;
 	}
 
 	public String getEquipo1() {
@@ -63,10 +45,5 @@ public class Partido {
 		this.goles2 = goles2;
 	}
 
-	@Override
-	public String toString() {
-		return "Partido [ronda=" + ronda + ", equipo1=" + equipo1 + ", equipo2=" + equipo2 + ", goles1=" + goles1
-				+ ", goles2=" + goles2 + "]";
-	}
 
 }
