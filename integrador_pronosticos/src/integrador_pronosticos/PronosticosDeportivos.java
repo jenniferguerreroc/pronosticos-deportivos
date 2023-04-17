@@ -10,7 +10,6 @@ import java.util.*;
 
 public class PronosticosDeportivos {
 	public static void main(String[] args) {
-
 		Path archivoResultado = Paths.get("src\\integrador_pronosticos\\Resultados.txt");
 		Path archivoPuntos = Paths.get("src\\integrador_pronosticos\\PuntajePartidos.txt");
 		List<Partido> partidos = cargarResultados(archivoResultado);
@@ -19,32 +18,37 @@ public class PronosticosDeportivos {
 		List<Resultado> resultados = determinarResultados(partidos);
 		Map<String, Integer> puntosPorParticipantes = calcularPuntos(pronosticos, resultados, puntos);
 	}
+	
+	public static void procesarDatos(String[] datos) throws CantidadDatosException {
+		//lanzar error si la cantidad de datos no es correcta
+	    if (datos.length != 6) {
+	        throw new CantidadDatosException("El archivo no contiene la cantidad de datos requeridos.");
+	    }
+	}
 
 	public static List<Partido> cargarResultados(Path archivoResultado) {
 		// leer el archivo resultado y asignación de variables
 		List<Partido> partidos = new ArrayList<>();
 		try {
 			for (String linea : Files.readAllLines(archivoResultado)) {
-				String[] separar = linea.split(",");
-				// si la cantidad de datos es distinta a 5 lanzar error
-				if (separar.length != 6) {
-					throw new IllegalArgumentException("El archivo no contiene la cantidad de datos requeridos.");
-				}
-				int fase = Integer.parseInt(separar[0]);
-				int ronda = Integer.parseInt(separar[1]);
-				String equipo1 = separar[2];
-				int goles1 = Integer.parseInt(separar[3]);
-				int goles2 = Integer.parseInt(separar[4]);
-				String equipo2 = separar[5];
+				String[] datos = linea.split(",");
+				procesarDatos(datos);
+				int fase = Integer.parseInt(datos[0]);
+				int ronda = Integer.parseInt(datos[1]);
+				String equipo1 = datos[2];
+				int goles1 = Integer.parseInt(datos[3]);
+				int goles2 = Integer.parseInt(datos[4]);
+				String equipo2 = datos[5];
 				partidos.add(new Partido(equipo1, goles1, equipo2, goles2));
 			}
+		 
+		} catch (NumberFormatException e) {
+			System.out.println("Goles debe ser un dato númerico");
+		} catch (CantidadDatosException e) {
+			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println("Error al leer el archivo de resultados.");
 			e.printStackTrace();
-		} catch (NumberFormatException e) {
-			System.out.println("El tipo de dato ingresado en goles debe ser numérico.");
-		} catch (IllegalArgumentException e) {
-			System.out.println(e.getMessage());
 		}
 		return partidos;
 	}
@@ -81,12 +85,12 @@ public class PronosticosDeportivos {
 		List<Puntajes> puntos = new ArrayList<>();
 		try {
 			for (String linea : Files.readAllLines(archivoPuntos)) {
-				String[] separar = linea.split(",");
-				int extraRonda = Integer.parseInt(separar[1]);
-				int extraFase = Integer.parseInt(separar[3]);
-				int gana = Integer.parseInt(separar[5]);
-				int empata = Integer.parseInt(separar[7]);
-				int pierde = Integer.parseInt(separar[9]);
+				String[] datos = linea.split(",");
+				int extraRonda = Integer.parseInt(datos[1]);
+				int extraFase = Integer.parseInt(datos[3]);
+				int gana = Integer.parseInt(datos[5]);
+				int empata = Integer.parseInt(datos[7]);
+				int pierde = Integer.parseInt(datos[9]);
 				puntos.add(new Puntajes(extraRonda, extraFase, gana, empata, pierde));
 			}
 		} catch (IOException e) {
