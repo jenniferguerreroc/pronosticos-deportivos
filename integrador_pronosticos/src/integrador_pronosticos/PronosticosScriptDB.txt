@@ -1,0 +1,17 @@
+-- Crear una tabla llamada pronosticos --
+CREATE TABLE pronosticos (
+  id SERIAL PRIMARY KEY,
+  nombre VARCHAR(50),
+  equipo1 VARCHAR(100),
+  resultado1 VARCHAR(20),
+  equipo2 VARCHAR(100),
+  resultado2 VARCHAR(20)
+);
+
+-- Insertar datos en la tabla pronosticos --
+INSERT INTO pronosticos VALUES (1,'Maria','Argentina','Gana','Alemania','Pierde');
+INSERT INTO pronosticos VALUES (2,'Maria','Peru','Gana','Venezuela','Pierde');
+INSERT INTO pronosticos VALUES (3,'Pedro','Argentina','Empata','Alemania','Empata');
+INSERT INTO pronosticos VALUES (4,'Pedro','Peru','Gana','Venezuela','Pierde');
+INSERT INTO pronosticos VALUES (5,'Maria','Belgica','Pierde','Chile','Gana');
+INSERT INTO pronosticos VALUES (6,'Pedro','Belgica','Gana','Chile','Pierde');

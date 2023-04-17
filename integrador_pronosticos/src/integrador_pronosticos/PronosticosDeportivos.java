@@ -18,7 +18,6 @@ public class PronosticosDeportivos {
 		List<Pronostico> pronosticos = cargarPronosticosBD();
 		List<Resultado> resultados = determinarResultados(partidos);
 		Map<String, Integer> puntosPorParticipantes = calcularPuntos(pronosticos, resultados, puntos);
-
 	}
 
 	public static List<Partido> cargarResultados(Path archivoResultado) {
@@ -55,21 +54,22 @@ public class PronosticosDeportivos {
 		List<Pronostico> pronosticos = new ArrayList<>();
 		try {
 			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection("jdbc:postgresql://192.168.0.15:5432/PronosticosDeportivos",
-					"postgres", "jenny");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://192.168.0.15:5432/PronosticosDeportivos", "postgres",
+					"jenny");
 
 			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery("select * from pronosticos");
-
-			while (rs.next()) {
-				String participante = rs.getString(2);
-				String equipo1 = rs.getString(3);
-				String resultado1 = rs.getString(4);
-				String equipo2 = rs.getString(5);
-				String resultado2 = rs.getString(6);
-				pronosticos.add(new Pronostico(participante, equipo1, resultado1, equipo2, resultado2));
+			ResultSet rs=stmt.executeQuery("select * from pronosticos");
+			
+			while(rs.next()) {
+			String participante = rs.getString(2);
+			String equipo1 = rs.getString(3);
+			String resultado1 = rs.getString(4);
+			String equipo2 = rs.getString(5);
+			String resultado2 = rs.getString(6);
+			pronosticos.add(new Pronostico(participante, equipo1, resultado1, equipo2, resultado2));
 			}
 			con.close();
+
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -122,7 +122,8 @@ public class PronosticosDeportivos {
 		return resultados;
 	}
 
-	public static Map<String, Integer> calcularPuntos(List<Pronostico> pronosticos, List<Resultado> resultados, List<Puntajes> puntos) {
+	public static Map<String, Integer> calcularPuntos(List<Pronostico> pronosticos, List<Resultado> resultados,
+			List<Puntajes> puntos) {
 		Map<String, Integer> puntosPorParticipante = new HashMap<>();
 
 		for (Pronostico pronostico : pronosticos) {
@@ -138,17 +139,16 @@ public class PronosticosDeportivos {
 							&& pronostico.getEquipo2().equals(resultado.getEquipo2())) {
 						// conficional para determinar los puntos
 						if (pronostico.getResultado1().equals(resultado.getResultado1())
-								&& resultado.getResultado1() == "Gana") {
+								&& pronostico.getResultado2().equals(resultado.getResultado2()) && !pronostico.getResultado1().equals("Empata")) {
 							puntosPorParticipante.put(pronostico.getParticipante(), puntosActuales + punto.getGana());
-							;
 							System.out.println(pronostico.getParticipante() + " acertó el pronostico de "
 									+ resultado.getEquipo1() + " vs " + resultado.getEquipo2());
 						} else if (pronostico.getResultado1().equals(resultado.getResultado1())
-								&& resultado.getResultado1() == "Empata") {
+								&& resultado.getResultado1().equals("Empata")) {
 							puntosPorParticipante.put(pronostico.getParticipante(), puntosActuales + punto.getEmpata());
 							System.out.println(pronostico.getParticipante() + " acertó el pronostico de "
 									+ resultado.getEquipo1() + " vs " + resultado.getEquipo2());
-						} else if (pronostico.getEquipo1().equals(resultado.getEquipo1())) {
+						} else {
 							puntosPorParticipante.put(pronostico.getParticipante(), puntosActuales + punto.getPierde());
 							System.out.println(pronostico.getParticipante() + " no acertó el pronostico de "
 									+ resultado.getEquipo1() + " vs " + resultado.getEquipo2());
@@ -159,6 +159,7 @@ public class PronosticosDeportivos {
 				}
 			}
 		}
+
 		// imprimir el resultado de cada participante
 		for (String participante : puntosPorParticipante.keySet()) {
 			System.out.println(
