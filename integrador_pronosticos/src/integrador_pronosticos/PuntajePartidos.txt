@@ -1,1 +1,5 @@
-ExtraRonda,1,ExtraFase,2,Gana,2,Empata,1,Pierde,0
+ExtraRonda,1
+ExtraFase,2
+Gana,2
+Empata,1
+Pierde,0

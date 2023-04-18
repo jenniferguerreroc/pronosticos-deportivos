@@ -23,14 +23,13 @@ class PronosticosDeportivosTest {
 		partidos.add(part1);
 		partidos.add(part2);
 		//se agrega el puntaje
-		List<Puntajes> puntos = new ArrayList<>();
-		Puntajes pun = new Puntajes(1,2,2,1,0);
-		puntos.add(pun);
+		int[] puntos = {1,2,2,1,0};
 		//metodos para determinar resultado y puntajes
 		List<Resultado> resultados = PronosticosDeportivos.determinarResultados(partidos);
 		Map<String, Integer> puntosPorParticipantes = PronosticosDeportivos.calcularPuntos(pronosticos, resultados, puntos);
+		PronosticosDeportivos.imprimirParticipantes(puntosPorParticipantes);
 		//resultado esperado
-		assertEquals(2, puntosPorParticipantes.get("Sol").intValue());
+		assertEquals(2, puntosPorParticipantes.get("Sol"));
 	}
 
 }
